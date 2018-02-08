@@ -1,0 +1,11 @@
+
+
+
+: SCUrve, 
+
+      >./runscurve_all.sh <RUN> #generate TrimOutputFile*.dat files
+      >./scurveDumper.sh <RUN> #generate moduleMap pdfs in dump_bb3_FED**** directories
+      OR
+      >python dumpAll_scurve_simple.py <RUN> #generate a summary distribution plot
+ 
+ 
