@@ -61,7 +61,8 @@ def run_from_argv():
 
 def outdir_from_argv():
     outdir = None
-    for x in sys.argv:
+    for x in sys.argv
+        print x, os.path.exists(x)
         if '/' in x and os.path.exists(x): outdir = x 
     return outdir
 
