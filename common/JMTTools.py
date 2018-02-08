@@ -59,7 +59,7 @@ def run_from_argv():
             raise ValueError('no number in argv and cannot grok %s' % os.getcwd())
     return run
 
-def fetch_root(ToFetch='total.root', PixelAlive_flag=False, RunDirectory, RunNumber):
+def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=False):
     in_fn = glob(os.path.join(RunDirectory, ToFetch))
     if not in_fn and not PixelAlive_flag:
         root_flist = glob(os.path.join(RunDirectory, 'PixelAlive_Fed_*_Run_%i.root' % RunNumber))
