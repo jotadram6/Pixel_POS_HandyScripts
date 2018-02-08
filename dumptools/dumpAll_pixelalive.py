@@ -11,18 +11,11 @@ dynrng = False #'nodynrng' not in sys.argv
 
 run = run_from_argv()
 run_dir = run_dir(run)
-#in_fn = glob(os.path.join(run_dir, 'total.root'))
-#if not in_fn:
-#    root_flist = glob(os.path.join(run_dir, 'PixelAlive_Fed_*_Run_%i.root' % run))
-#    if not root_flist:
-#        raise RuntimeError('need to run analysis first!')
-#    out_root = os.path.join(run_dir,'total.root')
-#    args = ' '.join(root_flist)
-#    cmd = 'hadd %s %s' %(out_root, args)
-#    os.system(cmd)
-#in_fn = glob(os.path.join(run_dir, 'total.root'))
-#in_fn = in_fn[0]
-out_dir = os.path.join(run_dir, 'dump_pixelalive')
+out_dir = outdir_from_argv()
+if not out_dir:
+    out_dir = os.path.join(out_dir, 'dump_pixelalive')
+else:
+    out_dir = os.path.join(run_dir, 'dump_pixelalive')
 os.system('mkdir -p %s' % out_dir)
 
 f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', PixelAlive_flag=True))

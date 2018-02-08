@@ -59,6 +59,12 @@ def run_from_argv():
             raise ValueError('no number in argv and cannot grok %s' % os.getcwd())
     return run
 
+def outdir_from_argv():
+    outdir = None
+    for x in sys.argv:
+        if '/' in x and os.path.exists(x): outdir = x 
+    return outdir
+
 def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=False):
     in_fn = glob(os.path.join(RunDirectory, ToFetch))
     if not in_fn and not PixelAlive_flag:
