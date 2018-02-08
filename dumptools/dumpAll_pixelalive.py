@@ -16,6 +16,7 @@ if not out_dir:
     out_dir = os.path.join(out_dir, 'dump_pixelalive')
 else:
     out_dir = os.path.join(run_dir, 'dump_pixelalive')
+print out_dir
 os.system('mkdir -p %s' % out_dir)
 
 f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', PixelAlive_flag=True))
