@@ -13,7 +13,7 @@ run = run_from_argv()
 run_dir = run_dir(run)
 out_dir = outdir_from_argv()
 print out_dir, "1"
-if out_diris not None:
+if out_dir is not None:
     out_dir = os.path.join(out_dir, 'dump_pixelalive')
 else:
     out_dir = os.path.join(run_dir, 'dump_pixelalive')
