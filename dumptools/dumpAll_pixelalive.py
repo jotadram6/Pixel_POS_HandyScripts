@@ -12,12 +12,11 @@ dynrng = False #'nodynrng' not in sys.argv
 run = run_from_argv()
 run_dir = run_dir(run)
 out_dir = outdir_from_argv()
-print out_dir, "1"
 if out_dir is not None:
     out_dir = os.path.join(out_dir, 'dump_pixelalive')
 else:
     out_dir = os.path.join(run_dir, 'dump_pixelalive')
-print out_dir, "2"
+print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
 
 f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', PixelAlive_flag=True))
