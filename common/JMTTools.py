@@ -74,6 +74,7 @@ def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=Fa
             ToFetch = root_flist[0]
     in_fn = glob(os.path.join(RunDirectory, ToFetch))
     in_fn = in_fn[0]
+    return in_fn
 
 def run_dir(run):
     run_thousand = run / 1000 * 1000
