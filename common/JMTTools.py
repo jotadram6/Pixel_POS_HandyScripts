@@ -59,6 +59,22 @@ def run_from_argv():
             raise ValueError('no number in argv and cannot grok %s' % os.getcwd())
     return run
 
+def fetch_root(ToFetch='total.root', RunDirectory, RunNumber, PixelAlive_flag=False):
+    in_fn = glob(os.path.join(RunDirectory, ToFetch))
+    if not in_fn and not PixelAlive_flag:
+        root_flist = glob(os.path.join(RunDirectory, 'PixelAlive_Fed_*_Run_%i.root' % RunNumber))
+        if not root_flist:
+            raise RuntimeError('need to run analysis first!')
+        if len(root_flist)>1:
+            out_root = os.path.join(RunDirectory,ToFetch)
+            args = ' '.join(root_flist)
+            cmd = 'hadd %s %s' %(out_root, args)
+            os.system(cmd)
+        elif len(root_flist)==1:
+            ToFetch = root_flist[0]
+    in_fn = glob(os.path.join(RunDirectory, ToFetch))
+    in_fn = in_fn[0]
+
 def run_dir(run):
     run_thousand = run / 1000 * 1000
     return os.path.join(POS_OUTPUT_DIRS, 'Run_%i' % run_thousand, 'Run_%i' % run)

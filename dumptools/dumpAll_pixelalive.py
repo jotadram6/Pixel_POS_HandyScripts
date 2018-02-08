@@ -1,5 +1,8 @@
+#!/bin/python
+
 import sys, os
 from pprint import pprint
+sys.path.append("../common/")
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
@@ -8,21 +11,21 @@ dynrng = False #'nodynrng' not in sys.argv
 
 run = run_from_argv()
 run_dir = run_dir(run)
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-if not in_fn:
-    root_flist = glob(os.path.join(run_dir, 'PixelAlive_Fed_*_Run_%i.root' % run))
-    if not root_flist:
-        raise RuntimeError('need to run analysis first!')
-    out_root = os.path.join(run_dir,'total.root')
-    args = ' '.join(root_flist)
-    cmd = 'hadd %s %s' %(out_root, args)
-    os.system(cmd)
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-in_fn = in_fn[0]
+#in_fn = glob(os.path.join(run_dir, 'total.root'))
+#if not in_fn:
+#    root_flist = glob(os.path.join(run_dir, 'PixelAlive_Fed_*_Run_%i.root' % run))
+#    if not root_flist:
+#        raise RuntimeError('need to run analysis first!')
+#    out_root = os.path.join(run_dir,'total.root')
+#    args = ' '.join(root_flist)
+#    cmd = 'hadd %s %s' %(out_root, args)
+#    os.system(cmd)
+#in_fn = glob(os.path.join(run_dir, 'total.root'))
+#in_fn = in_fn[0]
 out_dir = os.path.join(run_dir, 'dump_pixelalive')
 os.system('mkdir -p %s' % out_dir)
 
-f = ROOT.TFile(in_fn)
+f = ROOT.TFile(fetch_root(ToFetch='total.root', run_dir, run, PixelAlive_flag=True))
 
 dirs = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i_RNG%(rng)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for dsk in range(1,4) for bld in range(1,18) for pnl in range(1,3) for rng in range(1,3)]
 
