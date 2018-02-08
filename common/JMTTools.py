@@ -63,7 +63,7 @@ def outdir_from_argv():
     outdir = None
     for x in sys.argv:
         print x, os.path.exists(x)
-        if '/' in x and os.path.exists(x): outdir = x 
+        if '/' in str(x) and os.path.exists(x): outdir = x 
     return outdir
 
 def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=False):
