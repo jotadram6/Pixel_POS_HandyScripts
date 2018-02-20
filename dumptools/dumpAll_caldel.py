@@ -1,24 +1,29 @@
+#!/bin/python
+
 import sys, os
 from pprint import pprint
+sys.path.append("../common/")
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
 
 run = run_from_argv()
 run_dir = run_dir(run)
+# Do we need a fetch function here?
 in_fn = os.path.join(run_dir, 'CalDel_1.root')
 if not os.path.isfile(in_fn):
     raise IOError('no root file %s' % in_fn)
-out_dir = os.path.join(run_dir, 'dump_caldel')
+#
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_caldel')
+else:
+    out_dir = os.path.join(run_dir, 'dump_caldel')
+print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
 
+#Also fetch root file function here?
 f = ROOT.TFile(in_fn)
-
-dirs_bpix = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i_RNG%(rng)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for dsk in range(1,4) for bld in range(1,18) for pnl in range(1,3) for rng in range(1,3)]
-dirs_fpix = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF_MOD%(mod)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9) for lyr in range(1,5) for ldr in range(1,21) for mod in range(1,5)]
-
-dirs = dirs_bpix + dirs_fpix
-
 
 c = ROOT.TCanvas('c', '', 1300, 1000)
 c.Divide(4,4)
