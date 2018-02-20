@@ -9,11 +9,7 @@ set_style()
 
 run = run_from_argv()
 run_dir = run_dir(run)
-# Do we need a fetch function here?
-in_fn = os.path.join(run_dir, 'CalDel_1.root')
-if not os.path.isfile(in_fn):
-    raise IOError('no root file %s' % in_fn)
-#
+
 out_dir = outdir_from_argv()
 if out_dir is not None:
     out_dir = os.path.join(out_dir, 'dump_caldel')
@@ -22,7 +18,9 @@ else:
 print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
 
-#Also fetch root file function here?
+in_fn = os.path.join(run_dir, 'CalDel_1.root')
+if not os.path.isfile(in_fn):
+    raise IOError('no root file %s' % in_fn)
 f = ROOT.TFile(in_fn)
 
 c = ROOT.TCanvas('c', '', 1300, 1000)

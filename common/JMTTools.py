@@ -5,6 +5,8 @@ from collections import defaultdict
 from pprint import pprint
 from itertools import izip
 
+###SOME GLOBAL VARIABLES##
+
 BUILD_HOME = os.environ['BUILD_HOME']
 POS_OUTPUT_DIRS = os.environ['POS_OUTPUT_DIRS']
 PIXELCONFIGURATIONBASE = os.environ['PIXELCONFIGURATIONBASE']
@@ -13,6 +15,8 @@ dirs_fpix = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i/FPix_%(hc)s_D%(dsk)i_BLD%(bl
 dirs_bpix = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF_MOD%(mod)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9) for lyr in range(1,5) for ldr in range(1,21) for mod in range(1,5)]
 
 dirs = dirs_bpix + dirs_fpix
+
+##########################
 
 def mkdir_p(d):
     try:
