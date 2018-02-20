@@ -1,5 +1,11 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
 from pprint import pprint
+sys.path.append(os.path.join(PWD,"common/"))
+sys.path.append(os.path.join(PWD,"configtools/"))
 from JMTTools import *
 from JMTROOTTools import *
 import moduleSummaryPlottingTools as FNAL

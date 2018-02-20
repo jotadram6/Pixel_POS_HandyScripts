@@ -5,7 +5,6 @@ import commands as cmd
 PWD = cmd.getoutput('pwd')
 from pprint import pprint
 sys.path.append(os.path.join(PWD,"common/"))
-#sys.path.append("../common/")
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
