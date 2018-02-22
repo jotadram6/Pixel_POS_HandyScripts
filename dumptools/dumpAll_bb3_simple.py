@@ -1,28 +1,43 @@
+#!/bin/python
+
+import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 set_style(True)
 
 run = run_from_argv()
 run_dir = run_dir(run)
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-if not in_fn:
-    root_flist = glob(os.path.join(run_dir, 'SCurve_Fed_*_Run_%i.root' % run))
-    if not root_flist:
-        raise RuntimeError('need to run analysis first!')
-    out_root = os.path.join(run_dir,'total.root')
-    args = ' '.join(root_flist)
-    cmd = 'hadd %s %s' %(out_root, args)
-    os.system(cmd)
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-in_fn = in_fn[0]
 
-out_dir = os.path.join(run_dir,'dump_bb3')
+#Replaced by the line below
+#in_fn = glob(os.path.join(run_dir, 'total.root'))
+#if not in_fn:
+#    root_flist = glob(os.path.join(run_dir, 'SCurve_Fed_*_Run_%i.root' % run))
+#    if not root_flist:
+#        raise RuntimeError('need to run analysis first!')
+#    out_root = os.path.join(run_dir,'total.root')
+#    args = ' '.join(root_flist)
+#    cmd = 'hadd %s %s' %(out_root, args)
+#    os.system(cmd)
+#in_fn = glob(os.path.join(run_dir, 'total.root'))
+#in_fn = in_fn[0]
+#f = ROOT.TFile(in_fn)
+
+f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', BB3Simple_flag=False))
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+        out_dir = os.path.join(out_dir, 'dump_bb3')
+else:
+        out_dir = os.path.join(run_dir, 'dump_bb3')
+print "Generating output in:", out_dir
+
 if not os.path.isdir(out_dir):
     os.system('mkdir -p %s' %out_dir)
 
 pdf_fn = os.path.join(out_dir, 'bb3_simple.pdf')
-
-f = ROOT.TFile(in_fn)
 
 c = ROOT.TCanvas('c', '', 1920, 1000)
 c.Divide(4,2)
