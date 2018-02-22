@@ -1,26 +1,27 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 
 run = run_from_argv()
 run_dir = run_dir_from_argv()
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-if not in_fn:
-    root_flist = glob(os.path.join(run_dir, 'PixelAlive_Fed_*_Run_%i.root' % run))
-    if not root_flist:
-        raise RuntimeError('need to run analysis first!')
-    out_root = os.path.join(run_dir,'total.root')
-    args = ' '.join(root_flist)
-    cmd = 'hadd %s %s' %(out_root, args)
-    os.system(cmd)
-in_fn = glob(os.path.join(run_dir, 'total.root'))
-in_fn = in_fn[0]
 
+f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', PixelAlive_flag=True))
 
-out_dir = os.path.join(run_dir, 'dump_pixelalive')
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_pixelalive')
+else:
+    out_dir = os.path.join(run_dir, 'dump_pixelalive')
+print "Generating output in:", out_dir
+
 if not os.path.isdir(out_dir):
     os.system('mkdir -p -m 777 %s' % out_dir)
-f = ROOT.TFile(in_fn)
+
 pdf_fn = os.path.join(out_dir,'all_map.pdf')
 #  pdf_fn = os.path.join(out_dir,'all_map3-6-1-2.pdf')
 deadpixels_fn = os.path.join(out_dir,'dead_pixels.txt')
@@ -31,7 +32,8 @@ for fn in [deadpixels_fn,hotpixels_fn]:
         cmd = 'mv %s %s' %(fn,fn+'.old')
         os.system(cmd)
 
-dirs = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF_MOD%(mod)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9) for lyr in range(1,5) for ldr in range(1,21) for mod in range(1,5)]
+#Replaced by definition of Global Variable
+#dirs = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF_MOD%(mod)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9) for lyr in range(1,5) for ldr in range(1,21) for mod in range(1,5)]
 
 def mkHistList(f,d):
     hs = []
