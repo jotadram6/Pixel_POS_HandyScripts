@@ -16,6 +16,11 @@ dirs_bpix = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR
 
 dirs = dirs_bpix + dirs_fpix
 
+dirs_fpix_short = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for dsk in range(1,4)]
+dirs_bpix_short = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9)]
+
+dirs_short = dirs_bpix_short + dirs_fpix_short
+
 ##########################
 
 def mkdir_p(d):

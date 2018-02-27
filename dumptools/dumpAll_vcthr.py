@@ -1,20 +1,29 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
 from pprint import pprint
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
 
 run = run_from_argv()
 run_dir = run_dir(run)
+
 in_fn = os.path.join(run_dir, 'VcThr_1.root')
 if not os.path.isfile(in_fn):
     raise RuntimeError('no file at %s' % in_fn)
-out_dir = os.path.join(run_dir, 'dump_vcthrcaldel')
-os.system('mkdir -p %s' % out_dir)
-
 f = ROOT.TFile(in_fn)
 
-dirs = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i_RNG%(rng)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for dsk in range(1,4) for bld in range(1,18) for pnl in range(1,3) for rng in range(1,3)]
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_vcthrcaldel')
+else:
+    out_dir = os.path.join(run_dir, 'dump_vcthrcaldel')
+print "Generating output in:", out_dir
+os.system('mkdir -p %s' % out_dir)
 
 by_ntrigs = []
 first = True
