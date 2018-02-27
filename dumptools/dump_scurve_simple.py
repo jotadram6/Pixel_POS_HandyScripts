@@ -1,3 +1,8 @@
+#!/bin/python
+
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 set_style(True)

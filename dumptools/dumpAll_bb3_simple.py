@@ -25,7 +25,7 @@ run_dir = run_dir(run)
 #in_fn = in_fn[0]
 #f = ROOT.TFile(in_fn)
 
-f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', BB3Simple_flag=False))
+f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', BB3Simple_flag=True))
 
 out_dir = outdir_from_argv()
 if out_dir is not None:

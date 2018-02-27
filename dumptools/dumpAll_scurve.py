@@ -1,3 +1,9 @@
+#!/bin/python
+
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
+sys.path.append(os.path.join(PWD,"configtools/"))
 from JMTTools import *
 from JMTROOTTools import *
 from write_other_hc_configs import cable_map_parser, HC, module_sorter_by_portcard_phi
@@ -22,16 +28,26 @@ if len(sys.argv) == 2:
 	    os.system(cmd)
 	
 	in_fn = glob(os.path.join(run_dir, 'total.dat'))
-	out_dir = os.path.join(run_dir,'dump_scurve')
+        out_dir = outdir_from_argv()
+        if out_dir is not None:
+                out_dir = os.path.join(out_dir, 'dump_scurve')
+        else:
+                out_dir = os.path.join(run_dir, 'dump_scurve')
+        print "Generating output in:", out_dir
 	cable_map = cable_map_parser()
 elif len(sys.argv) == 3:
 	''' python dumpAll_scurve.py 123 '1333' '''
 	fednum = sys.argv[2]
 	in_fn = glob(os.path.join(run_dir, 'TrimOutputFile_Fed_{0}.dat'.format(fednum)))
-	out_dir = os.path.join(run_dir,'dump_scurve_FED{0}'.format(fednum))
+        out_dir = outdir_from_argv()
+        if out_dir is not None:
+                out_dir = os.path.join(out_dir, 'dump_scurve_FED{0}'.format(fednum))
+        else:
+                out_dir = os.path.join(run_dir, 'dump_scurve_FED{0}'.format(fednum))
+        print "Generating output in:", out_dir
 	cable_map = cable_map_parser(-1,int(fednum))
 else:
-	sys.exit("I dont know what you want.")
+	sys.exit("I dont know what you want. I need either a run number or a run+fed number:\n Examples:\n ./dumpAll_scurve.py 123 \n python dumpAll_scurve.py 123 '1294'")
 
 in_fn = in_fn[0]
 if not os.path.isdir(out_dir):

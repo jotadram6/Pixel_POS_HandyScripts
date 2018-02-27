@@ -1,5 +1,10 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
 from pprint import pprint
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
@@ -9,7 +14,13 @@ run_dir = run_dir(run)
 in_fn = os.path.join(run_dir, 'POHBias.root')
 if not os.path.isfile(in_fn):
     raise RuntimeError('no file at %s' % in_fn)
-out_dir = os.path.join(run_dir, 'dump_pohbias')
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_pohbias')
+else:
+    out_dir = os.path.join(run_dir, 'dump_pohbias')
+print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
 
 f = ROOT.TFile(in_fn)

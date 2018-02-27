@@ -1,3 +1,8 @@
+#!/bin/python
+
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 set_style()
@@ -7,10 +12,15 @@ run_dir = run_dir(run)
 in_fn = os.path.join(run_dir, 'SCurve_Fed_40_Run_%i.root' % run)
 if not os.path.isfile(in_fn):
     raise RuntimeError('need to make the root file: /nfshome0/pixelpilot/build/TriDAS/pixel/jmt/scurve.sh %i' % run)
-out_dir = os.path.join(run_dir, 'dump_scurve')
-os.system('mkdir -p %s' % out_dir)
-
 f = ROOT.TFile(in_fn)
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_scurve')
+else:
+    out_dir = os.path.join(run_dir, 'dump_scurve')
+print "Generating output in:", out_dir
+os.system('mkdir -p %s' % out_dir)
 
 dirs = [
     'NoisyCells',
