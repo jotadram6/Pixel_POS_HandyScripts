@@ -1,4 +1,9 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from pprint import pprint
 from JMTTools import *
 from JMTROOTTools import *
@@ -6,25 +11,33 @@ set_style()
 
 run = run_from_argv()
 run_dir = run_dir(run)
-in_fn = glob(os.path.join(run_dir, 'VcThrCalDel_total.root'))
-if not in_fn:
-    in_fn = glob(os.path.join(run_dir, 'VcThrCalDel_*.root'))
-    if len(in_fn) == 1:
-        in_fn = in_fn[0]
-    else:
-        os.system('hadd -v 0 {0}/VcThrCalDel_total.root {0}/VcThrCalDel*.root'.format(run_dir))
-        in_fn = os.path.join(run_dir, 'VcThrCalDel_total.root')
+
+#Replaced by the line below
+#in_fn = glob(os.path.join(run_dir, 'VcThrCalDel_total.root'))
+#if not in_fn:
+#    in_fn = glob(os.path.join(run_dir, 'VcThrCalDel_*.root'))
+#    if len(in_fn) == 1:
+#        in_fn = in_fn[0]
+#    else:
+#        os.system('hadd -v 0 {0}/VcThrCalDel_total.root {0}/VcThrCalDel*.root'.format(run_dir))
+#        in_fn = os.path.join(run_dir, 'VcThrCalDel_total.root')
+#else:
+#    in_fn = in_fn[0]
+#    
+#if not os.path.isfile(in_fn):
+#    raise RuntimeError('no file at %s' % in_fn)
+#f = ROOT.TFile(in_fn)
+
+f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='VcThrCalDel_total.root', VcThrCalDel_flag=True))
+
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_vcthrcaldel')
 else:
-    in_fn = in_fn[0]
-
-if not os.path.isfile(in_fn):
-    raise RuntimeError('no file at %s' % in_fn)
-out_dir = os.path.join(run_dir, 'dump_vcthrcaldel')
+    out_dir = os.path.join(run_dir, 'dump_vcthrcaldel')
+print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
-
-f = ROOT.TFile(in_fn)
-
-dirs = ['BPix/BPix_%(hc)s/BPix_%(hc)s_SEC%(sec)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF/BPix_%(hc)s_SEC%(sec)i_LYR%(lyr)i_LDR%(ldr)iF_MOD%(mod)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for sec in range(1,9) for lyr in range(1,5) for ldr in range(1,21) for mod in range(1,5)]
 
 by_ntrigs = []
 first = True

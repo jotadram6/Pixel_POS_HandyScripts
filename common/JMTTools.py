@@ -79,9 +79,9 @@ def outdir_from_argv():
         if '/' in str(x) and os.path.exists(x): outdir = x 
     return outdir
 
-def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=False, BB3Simple_flag=False):
+def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=False, BB3Simple_flag=False, VcThrCalDel_flag=False):
     in_fn = glob(os.path.join(RunDirectory, ToFetch))
-    if not in_fn and PixelAlive_flag and not BB3Simple_flag:
+    if not in_fn and PixelAlive_flag and not BB3Simple_flag and not VcThrCalDel_flag:
         root_flist = glob(os.path.join(RunDirectory, 'PixelAlive_Fed_*_Run_%i.root' % RunNumber))
         if not root_flist:
             raise RuntimeError('need to run analysis first!')
@@ -92,8 +92,19 @@ def fetch_root(RunDirectory, RunNumber, ToFetch='total.root', PixelAlive_flag=Fa
             os.system(cmd)
         elif len(root_flist)==1:
             ToFetch = root_flist[0]
-    if not in_fn and BB3Simple_flag and not PixelAlive_flag:
+    if not in_fn and BB3Simple_flag and not PixelAlive_flag and not VcThrCalDel_flag:
         root_flist = glob(os.path.join(RunDirectory, 'SCurve_Fed_*_Run_%i.root' % RunNumber))
+        if not root_flist:
+            raise RuntimeError('need to run analysis first!')
+        if len(root_flist)>1:
+            out_root = os.path.join(RunDirectory,ToFetch)
+            args = ' '.join(root_flist)
+            cmd = 'hadd %s %s' %(out_root, args)
+            os.system(cmd)
+        elif len(root_flist)==1:
+            ToFetch = root_flist[0]
+    if not in_fn and VcThrCalDel_flag and not PixelAlive_flag and not BB3Simple_flag:
+        root_flist = glob(os.path.join(RunDirectory, 'VcThrCalDel_*.root'))
         if not root_flist:
             raise RuntimeError('need to run analysis first!')
         if len(root_flist)>1:

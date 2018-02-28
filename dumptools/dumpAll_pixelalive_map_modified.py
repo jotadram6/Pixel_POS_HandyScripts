@@ -1,28 +1,37 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
+sys.path.append(os.path.join(PWD,"common/"))
 from JMTTools import *
 from JMTROOTTools import *
 
 run_dir = run_dir_from_argv()
+
 in_fn = glob(os.path.join(run_dir, 'PixelAlive_Fed*.root'))
 if not in_fn:
     raise RuntimeError('Generate root file first!')
 if len(in_fn)>1:
     raise RuntimeError('too many root files, check please!')
 in_fn = in_fn[0]
-out_dir = os.path.join(run_dir, 'dump_pixelalive')
+f = ROOT.TFile(in_fn)
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_pixelalive')
+else:
+    out_dir = os.path.join(run_dir, 'dump_pixelalive')
+print "Generating output in:", out_dir
 if not os.path.isdir(out_dir):
     os.system('mkdir -p -m 777 %s' % out_dir)
 
-f = ROOT.TFile(in_fn)
 pdf_fn = os.path.join(out_dir,'all_map.pdf')
 txt_fn = os.path.join(out_dir,'dead_pixels.txt')
 
 if os.path.isfile(txt_fn):
     cmd = 'mv %s %s' %(txt_fn,txt_fn+'.old')
     os.system(cmd)
-
-dirs = ['FPix/FPix_%(hc)s/FPix_%(hc)s_D%(dsk)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i/FPix_%(hc)s_D%(dsk)i_BLD%(bld)i_PNL%(pnl)i_RNG%(rng)i' % locals() for hc in ['BmI', 'BmO', 'BpI', 'BpO'] for dsk in range(1,4) for bld in range(1,18) for pnl in range(1,3) for rng in range(1,3)]
-
 
 def mkHistList(f,d):
     hs = []

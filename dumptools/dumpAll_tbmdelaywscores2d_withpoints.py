@@ -1,5 +1,11 @@
+#!/bin/python
+
 import sys, os
+import commands as cmd
+PWD = cmd.getoutput('pwd')
 from pprint import pprint
+sys.path.append(os.path.join(PWD,"common/"))
+sys.path.append(os.path.join(PWD,"configtools/"))
 from JMTTools import *
 from JMTROOTTools import *
 from cablemap import *
@@ -58,10 +64,15 @@ run_dir = run_dir(run)
 in_fn = os.path.join(run_dir, 'TBMDelay.root')
 if not os.path.isfile(in_fn):
     raise RuntimeError('no file at %s' % in_fn)
-out_dir = os.path.join(run_dir, 'dump_tbmdelaywscores')
-os.system('mkdir -p -m 777 %s' % out_dir)
-
 f = ROOT.TFile(in_fn)
+
+out_dir = outdir_from_argv()
+if out_dir is not None:
+    out_dir = os.path.join(out_dir, 'dump_tbmdelaywscores')
+else:
+    out_dir = os.path.join(run_dir, 'dump_tbmdelaywscores')
+print "Generating output in:", out_dir
+os.system('mkdir -p -m 777 %s' % out_dir)
 
 configDict = findconfigversions(findkey(run_dir))
 detconfigVersion = configDict['detconfig']
