@@ -1,11 +1,7 @@
 #!/bin/python
 
 import sys, os
-import commands as cmd
-PWD = cmd.getoutput('pwd')
-sys.path.append(os.path.join(PWD,"common/"))
-from JMTTools import *
-from JMTROOTTools import *
+from GetOpsPaths import *
 
 run_dir = run_dir_from_argv()
 

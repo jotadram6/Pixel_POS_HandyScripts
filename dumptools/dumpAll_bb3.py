@@ -1,13 +1,8 @@
 #!/bin/python
 
 import sys, os
-import commands as cmd
-PWD = cmd.getoutput('pwd')
 from pprint import pprint
-sys.path.append(os.path.join(PWD,"common/"))
-sys.path.append(os.path.join(PWD,"configtools/"))
-from JMTTools import *
-from JMTROOTTools import *
+from GetOpsPaths import *
 import moduleSummaryPlottingTools as FNAL
 from write_other_hc_configs import cable_map_parser, module_sorter_by_portcard_phi
 set_style(light=True)

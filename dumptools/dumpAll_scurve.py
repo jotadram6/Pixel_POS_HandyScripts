@@ -1,11 +1,6 @@
 #!/bin/python
 
-import commands as cmd
-PWD = cmd.getoutput('pwd')
-sys.path.append(os.path.join(PWD,"common/"))
-sys.path.append(os.path.join(PWD,"configtools/"))
-from JMTTools import *
-from JMTROOTTools import *
+from GetOpsPaths import *
 from write_other_hc_configs import cable_map_parser, HC, module_sorter_by_portcard_phi
 set_style(light=True)
 
