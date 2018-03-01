@@ -9,3 +9,12 @@ sys.path.append(os.path.join(PWD,"configtools/"))
 
 from CommonTools import *
 from CommonROOTTools import *
+
+#######################
+######ARG PARSER#######
+#######################
+
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('run', help='Run Number')
+args = parser.parse_args()

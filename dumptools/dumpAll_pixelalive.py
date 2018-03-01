@@ -7,8 +7,8 @@ set_style()
 
 dynrng = False #'nodynrng' not in sys.argv
 
-run = run_from_argv()
-run_dir = run_dir(run)
+######run = run_from_argv()
+run_dir = run_dir(args.run)
 out_dir = outdir_from_argv()
 if out_dir is not None:
     out_dir = os.path.join(out_dir, 'dump_pixelalive')
@@ -92,7 +92,7 @@ for roc in sorted(num_dead.keys()):
 
 
 if 'scp' in sys.argv:
-    remote_dir = 'public_html/qwer/dump_pixelalive/%i' % run
+    remote_dir = 'public_html/qwer/dump_pixelalive/%i' % args.run
     cmd = 'ssh jmt46@lnx201.lns.cornell.edu "mkdir -p %s"' % remote_dir
     print cmd
     os.system(cmd)
