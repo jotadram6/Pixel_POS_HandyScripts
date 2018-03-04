@@ -1,4 +1,4 @@
-import sys, os, cPickle
+import cPickle
 from array import array
 from glob import glob
 from collections import defaultdict

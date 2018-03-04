@@ -1,4 +1,5 @@
 import commands as cmd
+import sys, os
 
 PWD = cmd.getoutput('pwd')
 if len(PWD.split('dumptools'))>1:
