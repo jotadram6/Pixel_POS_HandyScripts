@@ -6,7 +6,7 @@ from GetOpsPaths import *
 set_style()
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 
 out_dir = outdir_from_argv()
 if out_dir is not None:
@@ -16,7 +16,24 @@ else:
 print "Generating output in:", out_dir
 os.system('mkdir -p %s' % out_dir)
 
-in_fn = os.path.join(run_dir, 'CalDel_1.root')
+#in_fn = os.path.join(run_dir, 'CalDel_1.root')
+if args.CalDel is None:
+    root_flist = glob(os.path.join(run_dir, 'CalDel_*.root'))
+    if not root_flist:
+        raise RuntimeError('need to run analysis first!')
+    if len(root_flist)>1:
+        out_root = os.path.join(run_dir,'CalDel_total.root')
+        args = ' '.join(root_flist)
+        cmd = 'hadd %s %s' %(out_root, args)
+        os.system(cmd)
+        ToFetch='CalDel_total.root'
+    elif len(root_flist)==1:
+        ToFetch = root_flist[0]
+    in_fn = os.path.join(run_dir, ToFetch)
+    print "Running over CalDel_total.root"
+else:
+    in_fn = os.path.join(run_dir, args.CalDel)
+    print "Running over "+args.CalDel
 if not os.path.isfile(in_fn):
     raise IOError('no root file %s' % in_fn)
 f = ROOT.TFile(in_fn)

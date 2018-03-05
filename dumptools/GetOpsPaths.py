@@ -18,4 +18,6 @@ from CommonROOTTools import *
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('run', help='Run Number')
+parser.add_argument('--FED', help='FED number to be used. Not needed in all scripts, just in: dumpAll_scurve.py, dumpAll_bb3.py')
+parser.add_argument('--CalDel', help='CalDel root to be used on dumpAll_caldel script')
 args = parser.parse_args()

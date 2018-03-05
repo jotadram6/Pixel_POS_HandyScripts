@@ -18,9 +18,10 @@ ROOT.gStyle.SetOptFit(1111)
 #out_fn = sys.argv[2]
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 
-if len(sys.argv) == 2:
+#if len(sys.argv) == 2:
+if args.run is not None and args.FED is None:
 	in_fn = glob(os.path.join(run_dir, 'total.dat'))
 	if not in_fn:
 	    trim_flist = glob(os.path.join(run_dir,'TrimOutputFile_Fed_*.dat'))
@@ -39,9 +40,11 @@ if len(sys.argv) == 2:
                 out_dir = os.path.join(run_dir, 'dump_bb3')
         print "Generating output in:", out_dir
 	the_doer = doer()
-elif len(sys.argv) == 3:
+#elif len(sys.argv) == 3:
+elif args.run is not None and args.FED is not None:
 	''' python dumpAll_bb3.py 123 '1294' '''
-	fednum = sys.argv[2]
+	#fednum = sys.argv[2]
+        fednum = int(args.FED)
 	in_fn = glob(os.path.join(run_dir, 'TrimOutputFile_Fed_{0}.dat'.format(fednum)))
         out_dir = outdir_from_argv()
         if out_dir is not None:
@@ -51,7 +54,8 @@ elif len(sys.argv) == 3:
         print "Generating output in:", out_dir
 	the_doer = cable_map_parser(-1,int(fednum))
 else:
-	sys.exit("I dont know what you want. I need either a run number or a run+fed number:\n Examples:\n ./dumpAll_bb3.py 123 \n python dumpAll_bb3.py 123 '1294'")
+	#sys.exit("I dont know what you want. I need either a run number or a run+fed number:\n Examples:\n ./dumpAll_bb3.py 123 \n python dumpAll_bb3.py 123 '1294'")
+        sys.exit("I dont know what you want. I need either a run number or a run+fed number:\n Examples:\n ./dumpAll_bb3.py 123 \n python dumpAll_bb3.py 123 --FED 1294")
 
 in_fn = in_fn[0]
 if not os.path.isdir(out_dir):

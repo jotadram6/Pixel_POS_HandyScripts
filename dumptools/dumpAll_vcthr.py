@@ -6,7 +6,7 @@ from GetOpsPaths import *
 set_style()
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 
 in_fn = os.path.join(run_dir, 'VcThr_1.root')
 if not os.path.isfile(in_fn):

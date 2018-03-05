@@ -4,7 +4,7 @@ from GetOpsPaths import *
 set_style(True)
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 #run_dir="/data/tif/Run_BmO/Run_1898/"
 
 f = ROOT.TFile(fetch_root(run_dir, run, ToFetch='total.root', BB3Simple_flag=True))

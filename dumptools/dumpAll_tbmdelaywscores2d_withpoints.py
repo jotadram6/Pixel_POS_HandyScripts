@@ -55,7 +55,7 @@ def getModuleList(detconfig_Fn):
     return modulelist
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 in_fn = os.path.join(run_dir, 'TBMDelay.root')
 if not os.path.isfile(in_fn):
     raise RuntimeError('no file at %s' % in_fn)

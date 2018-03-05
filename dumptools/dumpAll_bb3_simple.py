@@ -5,7 +5,7 @@ from GetOpsPaths import *
 set_style(True)
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 
 #Replaced by the line below
 #in_fn = glob(os.path.join(run_dir, 'total.root'))

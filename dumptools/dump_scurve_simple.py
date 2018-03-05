@@ -4,7 +4,7 @@ from GetOpsPaths import *
 set_style(True)
 
 run = run_from_argv()
-run_dir = run_dir(run)
+run_dir = run_dir(args.run)
 in_fn = glob(os.path.join(run_dir, 'SCurve_Fed_*_Run_%i.root' % run))
 if not in_fn:
     raise RuntimeError('need to make the root file: /nfshome0/pixelpilot/build/TriDAS/pixel/jmt/scurve.sh %i' % run)
