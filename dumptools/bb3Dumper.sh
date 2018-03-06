@@ -1,36 +1,36 @@
 #!/bin/bash
 
-python dumpAll_bb3.py $1 '1308' &
-python dumpAll_bb3.py $1 '1309' &
-python dumpAll_bb3.py $1 '1310' &
-python dumpAll_bb3.py $1 '1311' &
-python dumpAll_bb3.py $1 '1312' &
-python dumpAll_bb3.py $1 '1313' &
-python dumpAll_bb3.py $1 '1314' &
+python dumpAll_bb3.py $1 --FED 1308 &
+python dumpAll_bb3.py $1 --FED 1309 &
+python dumpAll_bb3.py $1 --FED 1310 &
+python dumpAll_bb3.py $1 --FED 1311 &
+python dumpAll_bb3.py $1 --FED 1312 &
+python dumpAll_bb3.py $1 --FED 1313 &
+python dumpAll_bb3.py $1 --FED 1314 &
 
-python dumpAll_bb3.py $1 '1296' &
-python dumpAll_bb3.py $1 '1297' &
-python dumpAll_bb3.py $1 '1298' &
-python dumpAll_bb3.py $1 '1299' &
-python dumpAll_bb3.py $1 '1300' &
-python dumpAll_bb3.py $1 '1301' &
-python dumpAll_bb3.py $1 '1302' &
+python dumpAll_bb3.py $1 --FED 1296 &
+python dumpAll_bb3.py $1 --FED 1297 &
+python dumpAll_bb3.py $1 --FED 1298 &
+python dumpAll_bb3.py $1 --FED 1299 &
+python dumpAll_bb3.py $1 --FED 1300 &
+python dumpAll_bb3.py $1 --FED 1301 &
+python dumpAll_bb3.py $1 --FED 1302 &
 
-python dumpAll_bb3.py $1 '1332' &
-python dumpAll_bb3.py $1 '1333' &
-python dumpAll_bb3.py $1 '1334' &
-python dumpAll_bb3.py $1 '1335' &
-python dumpAll_bb3.py $1 '1336' &
-python dumpAll_bb3.py $1 '1337' &
-python dumpAll_bb3.py $1 '1338' &
+python dumpAll_bb3.py $1 --FED 1332 &
+python dumpAll_bb3.py $1 --FED 1333 &
+python dumpAll_bb3.py $1 --FED 1334 &
+python dumpAll_bb3.py $1 --FED 1335 &
+python dumpAll_bb3.py $1 --FED 1336 &
+python dumpAll_bb3.py $1 --FED 1337 &
+python dumpAll_bb3.py $1 --FED 1338 &
 
-python dumpAll_bb3.py $1 '1320' &
-python dumpAll_bb3.py $1 '1321' &
-python dumpAll_bb3.py $1 '1322' &
-python dumpAll_bb3.py $1 '1323' &
-python dumpAll_bb3.py $1 '1324' &
-python dumpAll_bb3.py $1 '1325' &
-python dumpAll_bb3.py $1 '1326' &
+python dumpAll_bb3.py $1 --FED 1320 &
+python dumpAll_bb3.py $1 --FED 1321 &
+python dumpAll_bb3.py $1 --FED 1322 &
+python dumpAll_bb3.py $1 --FED 1323 &
+python dumpAll_bb3.py $1 --FED 1324 &
+python dumpAll_bb3.py $1 --FED 1325 &
+python dumpAll_bb3.py $1 --FED 1326 &
 
 wait
 echo
